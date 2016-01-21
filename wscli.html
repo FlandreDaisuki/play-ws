@@ -4,22 +4,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat</title>
+    <style>
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+    
+    .main {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .msgbox {
+        flex: 1;
+    }
+    
+    .typebox {
+        flex: none;
+        height: 40px;
+        display: flex;
+    }
+    
+    .inputarea {
+        flex: 1;
+        font: 40px Arial, sans-serif;
+    }
+    
+    .send {
+        flex: none;
+        height: 100%;
+    }
+    </style>
 </head>
 
 <body>
-    <div id="msgbox">
-        
+    <div class="main">
+        <div class="msgbox">
+        </div>
+        <div class="typebox">
+            <input class="inputarea" type="text">
+            <button class="send">送出</button>
+        </div>
+    </div>
     </div>
     <script>
     var mySocket = new WebSocket('ws://127.0.0.1:8080/', 'chat');
     console.log(mySocket);
-    
-    var msgbox = document.querySelector('#msgbox');
+
+    var msgbox = document.querySelector('.msgbox');
     mySocket.onmessage = function(e) {
         console.log(e);
         var msgdiv = document.createElement('div');
         var msgtext = document.createTextNode(e.data);
-        msgbox.appendChild(msgdiv.appendChild(msgtext));
+        msgdiv.appendChild(msgtext)
+        msgbox.appendChild(msgdiv);
+    }
+
+    var input = document.querySelector('.inputarea');
+
+    input.onkeyup = function(event) {
+        if (event.key === 'Enter') {
+            sendmsg();
+        }
+    }
+
+    var sendbtn = document.querySelector('.send');
+
+    sendbtn.onmouseup = function(event) {
+        if (event.buttons === 1) {
+            sendmsg();
+        }
+    }
+
+    function sendmsg() {
+        if (input.value.length > 0) {
+            Promise.resolve(mySocket.send(input.value))
+                .then(() => {
+                    input.value = '';
+                })
+        }
     }
     </script>
 </body>

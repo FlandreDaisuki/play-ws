@@ -1,5 +1,6 @@
 var http = require("http");
 var url = require("url");
+var fs = require('fs');
 var WebSocketServer = require('websocket').server;
 
 var clients = [];
@@ -14,11 +15,11 @@ function start() {
 
         // route(pathname, handlers, response, query);
 
-        response.writeHead(200, {
-            "Content-Type": "text/plain"
+        fs.readFile('wscli.html',function (err, data){
+            response.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
+            response.write(data);
+            response.end();
         });
-        response.write("Hello World");
-        response.end();
     }
 
     var server = http.createServer(onRequest).listen(8080, function() {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+
+<body>
+    <div id="msgbox">
+        
+    </div>
+    <script>
+    var mySocket = new WebSocket('ws://127.0.0.1:8080/', 'chat');
+    console.log(mySocket);
+    
+    var msgbox = document.querySelector('#msgbox');
+    mySocket.onmessage = function(e) {
+        console.log(e);
+        var msgdiv = document.createElement('div');
+        var msgtext = document.createTextNode(e.data);
+        msgbox.appendChild(msgdiv.appendChild(msgtext));
+    }
+    </script>
+</body>
+
+</html>

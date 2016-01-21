@@ -1,0 +1,14 @@
+{
+  "name": "play-ws",
+  "version": "0.1.0",
+  "description": "websocket chat",
+  "main": "wssvr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "FlandreDaisuki",
+  "license": "ISC",
+  "dependencies": {
+    "websocket": "^1.0.22"
+  }
+}

@@ -2,4 +2,4 @@
 
 ## Pre-work
 
-- `npm install websocket`
+- `npm install`
